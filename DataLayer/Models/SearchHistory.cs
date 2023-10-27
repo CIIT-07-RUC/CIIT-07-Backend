@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace DataLayer.Models;
+
+public partial class SearchHistory
+{
+    public int? UserId { get; set; }
+
+    public string? TConst { get; set; }
+
+    public DateTime? Timestamp { get; set; }
+
+    public string? SearchInput { get; set; }
+}
