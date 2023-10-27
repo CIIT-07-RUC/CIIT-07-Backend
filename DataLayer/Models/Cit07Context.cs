@@ -15,7 +15,7 @@ public partial class Cit07Context : DbContext
     {
     }
 
-    public virtual DbSet<DbUser> DbUsers { get; set; }
+    public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<SearchHistory> SearchHistories { get; set; }
 
@@ -29,7 +29,7 @@ public partial class Cit07Context : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<DbUser>(entity =>
+        modelBuilder.Entity<User>(entity =>
         {
             entity
                 .HasNoKey()
@@ -47,7 +47,7 @@ public partial class Cit07Context : DbContext
                 .HasMaxLength(20)
                 .IsFixedLength()
                 .HasColumnName("phone");
-            entity.Property(e => e.UserId)
+            entity.Property(e => e.Id)
                 .HasDefaultValueSql("nextval('db_user_user_id_seq1'::regclass)")
                 .HasColumnName("user_id");
             entity.Property(e => e.UserName).HasColumnName("user_name");

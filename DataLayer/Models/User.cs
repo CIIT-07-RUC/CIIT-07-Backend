@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DataLayer.Models;
 
-public partial class DbUser
+public partial class User
 {
     public string? Password { get; set; }
 
@@ -17,5 +17,5 @@ public partial class DbUser
 
     public string? Phone { get; set; }
 
-    public int UserId { get; set; }
+    public int Id { get; set; }
 }
