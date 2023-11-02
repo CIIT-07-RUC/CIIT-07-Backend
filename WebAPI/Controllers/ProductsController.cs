@@ -38,6 +38,14 @@ namespace WebAPI.Controllers
             return Ok(users);
         }
 
+
+        [HttpPost]
+        public IActionResult SignIn(RegisterUserModel model)
+        {
+            _dataservice.RegisterUser(model.Email, model.Password, model.PasswordConfirmation);
+            return Ok();
+        }
+
         [HttpGet("{id}")]
         public IActionResult GetUser(int id)
         {

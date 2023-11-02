@@ -78,7 +78,7 @@ namespace DataLayer
             var confirmPasswordParam = new Npgsql.NpgsqlParameter("confirmPassword", NpgsqlTypes.NpgsqlDbType.Text);
             confirmPasswordParam.Value = passwordConfirmation;
             var user = GetUserByEmail(email);
-            if (user.Email.Length > 0)
+            if (user != null)
             {
                 return false;
             }
