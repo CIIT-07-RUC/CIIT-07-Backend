@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using DataLayer;
+using DataLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -31,7 +32,28 @@ namespace WebAPI.Controllers
             {
                 return NotFound();
             }
+
+            // var usersMapped = _mapper.Map<IEnumerable<UserModel>>(users);
             return Ok(users);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetUser(int id)
+        {
+            var user = _dataservice.GetUser(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(CreateUserModel(user));
+        }
+
+        private UserModel CreateUserModel(User user)
+        {
+            var model = _mapper.Map<UserModel>(user);
+            return model;
+
         }
     }
 }
