@@ -27,7 +27,8 @@ namespace WebAPI.Controllers
         [HttpGet]
         public IActionResult GetUsers()
         {
-            var users = _dataservice.GetUsers();
+            var users = _dataservice.GetUsers()
+                .Select(x => CreateUserListModel(x));
             if (users == null)
             {
                 return NotFound();
@@ -52,6 +53,13 @@ namespace WebAPI.Controllers
         private UserModel CreateUserModel(User user)
         {
             var model = _mapper.Map<UserModel>(user);
+            return model;
+
+        }
+
+        private UserListModel CreateUserListModel(User user)
+        {
+            var model = _mapper.Map<UserListModel>(user);
             return model;
 
         }

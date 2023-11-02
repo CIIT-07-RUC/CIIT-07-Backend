@@ -9,7 +9,9 @@ namespace WebAPI.Models.Profiles
 		public UserProfile()
 		{
 			CreateMap<User, UserModel>();
-		}
-	}
+            CreateMap<User, UserListModel>();
+
+        }
+    }
 } 
 
