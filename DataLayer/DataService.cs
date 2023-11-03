@@ -1,13 +1,15 @@
 ﻿using System;
 using DataLayer.Models;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace DataLayer
 {
-	public class DataService : IDataService
+    public class DataService : IDataService
 	{
         Cit07Context db = new();
 
+        
         public DataService()
         {
         }
@@ -56,14 +58,23 @@ namespace DataLayer
         public bool LoginUser(string email, string password)
         {
 
-            var emailParam = new Npgsql.NpgsqlParameter("email", NpgsqlTypes.NpgsqlDbType.Text);
-            emailParam.Value = email;
+            var connectionString = "Host=cit.ruc.dk;Database=cit07;Username=cit07;Password=GdSpVBqksHbh";
+            using var connection = new NpgsqlConnection(connectionString);
+            connection.Open();
 
-            var passwordParam = new Npgsql.NpgsqlParameter("password", NpgsqlTypes.NpgsqlDbType.Text);
-            passwordParam.Value = password;
+            using var cmd = connection.CreateCommand();
+            cmd.Connection = connection;
+            cmd.CommandText = $"SELECT public.login_in_user('{email}', '{password}')";
 
-            var result = db.Database.ExecuteSqlRaw("SELECT public.login_in_user({0}::bpchar, {1}::bpchar) AS result", email, password);
-            return result == 1;
+            using var rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                return rdr.GetBoolean(0);
+            }
+
+            connection.Close();
+            return false;
         }
 
         public bool RegisterUser(string email, string password, string passwordConfirmation)
@@ -98,10 +109,6 @@ namespace DataLayer
             }   
             throw new NotImplementedException();
         }
-
-
-
-
 
 
         public User UpdateUserInfo(int id)

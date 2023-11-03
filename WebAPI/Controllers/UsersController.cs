@@ -11,13 +11,13 @@ namespace WebAPI.Controllers
 {
     [Route("api/users")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly IDataService _dataservice;
         private readonly LinkGenerator _linkGenerator;
         private readonly IMapper _mapper;
 
-        public ProductsController(IDataService dataService, LinkGenerator linkGenerator, IMapper mapper)
+        public UsersController(IDataService dataService, LinkGenerator linkGenerator, IMapper mapper)
         {
             _dataservice = dataService;
             _linkGenerator = linkGenerator;
@@ -44,6 +44,14 @@ namespace WebAPI.Controllers
         {
             _dataservice.RegisterUser(model.Email, model.Password, model.PasswordConfirmation);
             return Ok();
+        }
+
+        [HttpPost("login")]
+        public IActionResult Login(LoginUserModel model)
+        {
+            var userLogin = _dataservice.LoginUser(model.Email, model.Password);
+            Console.WriteLine("USERLOGIN {0}", userLogin);
+            return Ok(userLogin);
         }
 
         [HttpGet("{id}")]
