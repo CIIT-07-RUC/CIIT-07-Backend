@@ -50,8 +50,32 @@ namespace WebAPI.Controllers
         public IActionResult Login(LoginUserModel model)
         {
             var userLogin = _dataservice.LoginUser(model.Email, model.Password);
-            Console.WriteLine("USERLOGIN {0}", userLogin);
-            return Ok(userLogin);
+
+            if (userLogin == false)
+            {
+                BadRequest();
+            }
+
+            var claims = new List<Claim>
+        {
+                new Claim(ClaimTypes.Name, model.Email)
+            };
+
+            var secret = "popeopwqodpodpaosap323";
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
+
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+            var token = new JwtSecurityToken(
+               claims: claims,
+               expires: DateTime.Now.AddDays(4),
+               signingCredentials: creds
+            );
+
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+
+
+            return Ok(new { model.Email, token = jwt });
         }
 
         [HttpGet("{id}")]
