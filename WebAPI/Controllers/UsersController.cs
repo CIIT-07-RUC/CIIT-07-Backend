@@ -29,12 +29,10 @@ namespace WebAPI.Controllers
             _mapper = mapper;
         }
 
-        [Authorize]
         [HttpGet]
         public IActionResult GetUsers()
         {
-            var users = _dataservice.GetUsers()
-                .Select(x => CreateUserListModel(x));
+            var users = _dataservice.GetUsers();
             if (users == null)
             {
                 return NotFound();
@@ -100,6 +98,20 @@ namespace WebAPI.Controllers
             Console.WriteLine("userLoginuserLogin {0}", userLogin);
 
             return Ok(updatedCategory);
+
+        }
+
+        [HttpDelete("{id:int}")]
+        public IActionResult DeleteUser(int id)
+        {
+            var isUserRemoved = _dataservice.RemoveUser(id);
+
+            if (!isUserRemoved)
+            {
+                return BadRequest(isUserRemoved);
+            }
+
+            return Ok(isUserRemoved);
 
         }
 
