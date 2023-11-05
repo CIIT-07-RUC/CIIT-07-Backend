@@ -5,9 +5,10 @@ using Npgsql;
 
 namespace DataLayer
 {
+    
     public class DataService : IDataService
 	{
-        Cit07Context db = new();
+        ImdbContext db = new();
 
         
         public DataService()
@@ -16,15 +17,11 @@ namespace DataLayer
 
         public User GetUser(int id)
         {
+            Console.WriteLine("ID ID ID {0}", id);
             var user = db.Users
                 .Where(x => x.Id == id)
-                .Select(p => new User
-                {
-                    UserName = p.UserName,
-                    LastName = p.LastName,
-                    Email = p.Email
-                })
                 .FirstOrDefault();
+            Console.WriteLine("CURR USER {0}", user);
             return user;
         }
 
@@ -117,9 +114,39 @@ namespace DataLayer
         }
 
 
-        public User UpdateUserInfo(int id)
+        public bool UpdateUserInfo(int id, string phone, string email)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("TEST ME UP {0} {1} {2}", id, phone, email);
+            var currUser = GetUser(id);
+            Console.WriteLine("CURR USER {0}", currUser.Id);
+
+            if (currUser == null)
+            {
+                return false; 
+            }
+
+            if (phone != null)
+            {
+                currUser.Phone = phone;   
+            }
+
+            if (email != null)
+            {
+                currUser.Email = email;
+            }
+
+            try
+            {
+                Console.WriteLine("TU SOM phone -- {0} email {1}", currUser.Email, currUser.Phone);
+                db.Entry(currUser).State = EntityState.Modified; // Mark the entity as modified
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("EXCEPTION EX {0}", ex);
+                return false;
+            }
         }
     }
 }

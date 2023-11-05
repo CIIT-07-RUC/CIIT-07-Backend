@@ -10,7 +10,7 @@ namespace WebAPI.Models.Profiles
 		{
 			CreateMap<User, UserModel>();
             CreateMap<User, UserListModel>();
-
+            CreateMap<User, UpdateUserModel>();
         }
     }
 } 

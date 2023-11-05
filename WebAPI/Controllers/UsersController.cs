@@ -6,6 +6,11 @@ using AutoMapper;
 using DataLayer;
 using DataLayer.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers
 {
@@ -75,7 +80,7 @@ namespace WebAPI.Controllers
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-
+            // User ID in JWT 
             var token = new JwtSecurityToken(
                claims: claims,
                expires: DateTime.Now.AddDays(4),
@@ -87,6 +92,17 @@ namespace WebAPI.Controllers
 
             return Ok(new { model.Email, token = jwt });
         }
+
+        [HttpPut("{id:int}")]
+        public IActionResult UpdateUserInfo(int id, [FromBody] UpdateUserModel updatedCategory)
+        {
+            var userLogin = _dataservice.UpdateUserInfo(id, updatedCategory.Phone, updatedCategory.Email);
+            Console.WriteLine("userLoginuserLogin {0}", userLogin);
+
+            return Ok(updatedCategory);
+
+        }
+
 
         [HttpGet("{id}")]
         public IActionResult GetUser(int id)
@@ -110,6 +126,13 @@ namespace WebAPI.Controllers
         private UserListModel CreateUserListModel(User user)
         {
             var model = _mapper.Map<UserListModel>(user);
+            return model;
+
+        }
+
+        private UpdateUserModel CreateUpdateUserModel(User user)
+        {
+            var model = _mapper.Map<UpdateUserModel>(user);
             return model;
 
         }
