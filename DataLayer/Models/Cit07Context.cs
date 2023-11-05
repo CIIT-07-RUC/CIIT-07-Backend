@@ -4,24 +4,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer.Models;
 
-public partial class ImdbContext : DbContext
+public partial class Cit07Context : DbContext
 {
-    public ImdbContext()
+    public Cit07Context()
     {
     }
 
-    public ImdbContext(DbContextOptions<ImdbContext> options)
+    public Cit07Context(DbContextOptions<Cit07Context> options)
         : base(options)
     {
     }
 
-    public virtual DbSet<ActorTitle> ActorTitles { get; set; }
-
     public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<NameBasic> NameBasics { get; set; }
-
-    public virtual DbSet<NewTable> NewTables { get; set; }
 
     public virtual DbSet<OmdbDatum> OmdbData { get; set; }
 
@@ -41,33 +37,29 @@ public partial class ImdbContext : DbContext
 
     public virtual DbSet<TitleRating> TitleRatings { get; set; }
 
+    public virtual DbSet<UserBookmark> UserBookmarks { get; set; }
+
     public virtual DbSet<UserRating> UserRatings { get; set; }
 
     public virtual DbSet<Wi> Wis { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Server=localhost;Database=imdb;User Id=postgres;Password=admin");
+        => optionsBuilder.UseNpgsql("Server=cit.ruc.dk;Database=cit07;User Id= cit07;Password= GdSpVBqksHbh");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<ActorTitle>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToTable("actor_titles");
-
-            entity.Property(e => e.Insert)
-                .HasMaxLength(10)
-                .IsFixedLength()
-                .HasColumnName("insert");
-        });
-
         modelBuilder.Entity<User>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("db_user_pkey");
+
             entity.ToTable("db_user");
 
-            entity.HasKey(e => e.Id); // Specify the primary key
+            entity.HasIndex(e => e.Email, "db_user_email_idx");
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("nextval('db_user_user_id_seq1'::regclass)")
+                .HasColumnName("user_id");
             entity.Property(e => e.Email).HasColumnName("email");
             entity.Property(e => e.FirstName).HasColumnName("first_name");
             entity.Property(e => e.LastName).HasColumnName("last_name");
@@ -78,9 +70,6 @@ public partial class ImdbContext : DbContext
                 .HasMaxLength(20)
                 .IsFixedLength()
                 .HasColumnName("phone");
-            entity.Property(e => e.Id)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("user_id");
             entity.Property(e => e.UserName).HasColumnName("user_name");
         });
 
@@ -89,6 +78,12 @@ public partial class ImdbContext : DbContext
             entity
                 .HasNoKey()
                 .ToTable("name_basics");
+
+            entity.HasIndex(e => e.Nconst, "name_basics_nconst_idx");
+
+            entity.HasIndex(e => e.Primaryname, "name_basics_primaryname_idx");
+
+            entity.HasIndex(e => e.Primaryprofession, "name_basics_primaryprofession_idx");
 
             entity.Property(e => e.Birthyear)
                 .HasMaxLength(4)
@@ -101,9 +96,6 @@ public partial class ImdbContext : DbContext
             entity.Property(e => e.Knownfortitles)
                 .HasMaxLength(256)
                 .HasColumnName("knownfortitles");
-            entity.Property(e => e.NameRating)
-                .HasPrecision(10, 2)
-                .HasColumnName("name_rating");
             entity.Property(e => e.Nconst)
                 .HasMaxLength(10)
                 .IsFixedLength()
@@ -114,18 +106,6 @@ public partial class ImdbContext : DbContext
             entity.Property(e => e.Primaryprofession)
                 .HasMaxLength(256)
                 .HasColumnName("primaryprofession");
-        });
-
-        modelBuilder.Entity<NewTable>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToTable("new_table");
-
-            entity.Property(e => e.Count).HasColumnName("count");
-            entity.Property(e => e.Primaryname)
-                .HasMaxLength(256)
-                .HasColumnName("primaryname");
         });
 
         modelBuilder.Entity<OmdbDatum>(entity =>
@@ -224,6 +204,10 @@ public partial class ImdbContext : DbContext
                 .HasNoKey()
                 .ToTable("search_history");
 
+            entity.HasIndex(e => e.TConst, "search_history_t_const_idx");
+
+            entity.HasIndex(e => e.UserId, "search_history_user_id_idx");
+
             entity.Property(e => e.SearchInput).HasColumnName("search_input");
             entity.Property(e => e.TConst)
                 .HasMaxLength(10)
@@ -232,10 +216,7 @@ public partial class ImdbContext : DbContext
             entity.Property(e => e.Timestamp)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("timestamp");
-            entity.Property(e => e.UserId)
-                .HasMaxLength(10)
-                .IsFixedLength()
-                .HasColumnName("user_id");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
 
             entity.HasOne(d => d.TConstNavigation).WithMany()
                 .HasForeignKey(d => d.TConst)
@@ -319,6 +300,10 @@ public partial class ImdbContext : DbContext
                 .HasNoKey()
                 .ToTable("title_episode");
 
+            entity.HasIndex(e => e.ParentTconst, "title_episode_parent_tconst_idx");
+
+            entity.HasIndex(e => e.TConst, "title_episode_t_const_idx");
+
             entity.Property(e => e.EpisodeNumber).HasColumnName("episode_number");
             entity.Property(e => e.ParentTconst)
                 .HasMaxLength(10)
@@ -337,6 +322,12 @@ public partial class ImdbContext : DbContext
 
             entity.ToTable("title_extended");
 
+            entity.HasIndex(e => e.Genres, "title_extended_genres_idx");
+
+            entity.HasIndex(e => e.PrimaryTitle, "title_extended_primary_title_idx");
+
+            entity.HasIndex(e => e.TConst, "title_extended_t_const_idx");
+
             entity.Property(e => e.TConst)
                 .HasMaxLength(10)
                 .IsFixedLength()
@@ -349,7 +340,7 @@ public partial class ImdbContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("end_year");
             entity.Property(e => e.Genres)
-                .HasMaxLength(256)
+                .HasMaxLength(255)
                 .HasColumnName("genres");
             entity.Property(e => e.IsAdult).HasColumnName("is_adult");
             entity.Property(e => e.NumVotes).HasColumnName("num_votes");
@@ -372,6 +363,10 @@ public partial class ImdbContext : DbContext
             entity
                 .HasNoKey()
                 .ToTable("title_principals");
+
+            entity.HasIndex(e => e.Nconst, "title_principals_nconst_idx");
+
+            entity.HasIndex(e => e.Tconst, "title_principals_tconst_idx");
 
             entity.Property(e => e.Category)
                 .HasMaxLength(50)
@@ -405,11 +400,43 @@ public partial class ImdbContext : DbContext
                 .HasColumnName("tconst");
         });
 
+        modelBuilder.Entity<UserBookmark>(entity =>
+        {
+            entity.HasKey(e => e.BookmarkId).HasName("user_bookmark_pkey");
+
+            entity.ToTable("user_bookmark");
+
+            entity.HasIndex(e => e.NConst, "user_bookmark_n_const_idx");
+
+            entity.HasIndex(e => e.TConst, "user_bookmark_t_const_idx");
+
+            entity.HasIndex(e => e.UserId, "user_bookmark_user_id_idx");
+
+            entity.Property(e => e.BookmarkId).HasColumnName("bookmark_id");
+            entity.Property(e => e.BookmarkComment).HasColumnName("bookmark_comment");
+            entity.Property(e => e.NConst)
+                .HasMaxLength(10)
+                .IsFixedLength()
+                .HasColumnName("n_const");
+            entity.Property(e => e.TConst)
+                .HasMaxLength(10)
+                .IsFixedLength()
+                .HasColumnName("t_const");
+            entity.Property(e => e.Timestamp)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("timestamp");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+        });
+
         modelBuilder.Entity<UserRating>(entity =>
         {
             entity
                 .HasNoKey()
                 .ToTable("user_rating");
+
+            entity.HasIndex(e => e.TConst, "user_rating_t_const_idx");
+
+            entity.HasIndex(e => e.UserId, "user_rating_user_id_idx");
 
             entity.Property(e => e.Comment).HasColumnName("comment");
             entity.Property(e => e.Rating).HasColumnName("rating");
@@ -420,10 +447,7 @@ public partial class ImdbContext : DbContext
             entity.Property(e => e.Timestamp)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("timestamp");
-            entity.Property(e => e.UserId)
-                .HasMaxLength(10)
-                .IsFixedLength()
-                .HasColumnName("user_id");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
 
             entity.HasOne(d => d.TConstNavigation).WithMany()
                 .HasForeignKey(d => d.TConst)

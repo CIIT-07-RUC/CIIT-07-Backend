@@ -16,6 +16,4 @@ public partial class NameBasic
     public string? Primaryprofession { get; set; }
 
     public string? Knownfortitles { get; set; }
-
-    public decimal? NameRating { get; set; }
 }

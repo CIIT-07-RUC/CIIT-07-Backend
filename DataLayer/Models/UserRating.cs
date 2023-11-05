@@ -5,7 +5,7 @@ namespace DataLayer.Models;
 
 public partial class UserRating
 {
-    public string? UserId { get; set; }
+    public int? UserId { get; set; }
 
     public string? TConst { get; set; }
 

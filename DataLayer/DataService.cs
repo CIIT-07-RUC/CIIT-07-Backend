@@ -8,7 +8,7 @@ namespace DataLayer
     
     public class DataService : IDataService
 	{
-        ImdbContext db = new();
+        Cit07Context db = new();
 
         
         public DataService()
@@ -109,8 +109,8 @@ namespace DataLayer
                 db.Remove(user);
 
                 return db.SaveChanges() > 0;
-            }   
-            throw new NotImplementedException();
+            }
+            return false;
         }
 
 
