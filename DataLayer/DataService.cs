@@ -77,25 +77,31 @@ namespace DataLayer
             return false;
         }
 
-        public bool RegisterUser(string email, string password, string passwordConfirmation)
+        public Tuple<bool, string> RegisterUser(string email, string password, string passwordConfirmation)
         {
-            var emailParam = new Npgsql.NpgsqlParameter("email", NpgsqlTypes.NpgsqlDbType.Text);
-            emailParam.Value = email;
 
-            var passwordParam = new Npgsql.NpgsqlParameter("password", NpgsqlTypes.NpgsqlDbType.Text);
-            passwordParam.Value = password;
+            var connectionString = "Host=cit.ruc.dk;Database=cit07;Username=cit07;Password=GdSpVBqksHbh";
+            using var connection = new NpgsqlConnection(connectionString);
+            connection.Open();
 
+            using var cmd = connection.CreateCommand();
+            cmd.Connection = connection;
+            cmd.CommandText = $"SELECT public.register_user('{email}', '{password}', '{passwordConfirmation}')";
 
-            var confirmPasswordParam = new Npgsql.NpgsqlParameter("confirmPassword", NpgsqlTypes.NpgsqlDbType.Text);
-            confirmPasswordParam.Value = passwordConfirmation;
-            var user = GetUserByEmail(email);
-            if (user != null)
+            using var rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
             {
-                return false;
+                var IsRegistrationSuccessful = false;
+                if (rdr.GetString(0) == "OK")
+                {
+                    IsRegistrationSuccessful = true;
+                }
+                return Tuple.Create(IsRegistrationSuccessful, rdr.GetString(0));
             }
+            connection.Close();
+            return Tuple.Create(false, "Authentication was not succesfull");
 
-            db.Database.ExecuteSqlRaw("SELECT public.register_user({0}::bpchar, {1}::bpchar, {2}::bpchar) AS result", email, password, passwordConfirmation);
-            return true; 
         }
 
         public bool RemoveUser(int id)

@@ -9,8 +9,8 @@ namespace DataLayer
 		public User GetUserByEmail(string email);
         public List<User> GetUsers();
 		public bool LoginUser(string email, string password);
-		public bool RegisterUser(string email, string password, string passwordConfirmation);
 		public User UpdateUserInfo(int id);
+		public Tuple<bool, string> RegisterUser(string email, string password, string passwordConfirmation);
 		public bool RemoveUser(int id);
 
 		#if haveMoreTime

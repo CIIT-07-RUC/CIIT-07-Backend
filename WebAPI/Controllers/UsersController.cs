@@ -24,6 +24,7 @@ namespace WebAPI.Controllers
             _mapper = mapper;
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult GetUsers()
         {
@@ -42,8 +43,17 @@ namespace WebAPI.Controllers
         [HttpPost]
         public IActionResult SignIn(RegisterUserModel model)
         {
-            _dataservice.RegisterUser(model.Email, model.Password, model.PasswordConfirmation);
-            return Ok();
+            var registerUser = _dataservice.RegisterUser(model.Email, model.Password, model.PasswordConfirmation);
+
+            bool isRegistrationSuccessful = registerUser.Item1;
+            string responseMessage = registerUser.Item2;
+
+            if (isRegistrationSuccessful == false)
+            {
+                return BadRequest(new { isRegistrationSuccessful = isRegistrationSuccessful, responseMessage = responseMessage });
+            }
+
+            return Ok(new { isRegistrationSuccessful = isRegistrationSuccessful, responseMessage = responseMessage });
         }
 
         [HttpPost("login")]
