@@ -78,21 +78,27 @@ namespace WebAPI.Controllers
                 new Claim(ClaimTypes.Name, model.Email)
             };
 
+            // TODO: Hide secret 
             var secret = "popeopwqodpodpaosap323";
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-            // User ID in JWT 
+
             var token = new JwtSecurityToken(
                claims: claims,
                expires: DateTime.Now.AddDays(4),
                signingCredentials: creds
             );
 
+            var findUserByEmail = _dataservice.GetUserByEmail(model.Email);
+
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
-
-            return Ok(new { model.Email, token = jwt });
+            return Ok(new {
+                model.Email,
+                id = findUserByEmail.Id,
+                token = jwt
+            });
         }
 
         [HttpPut("{id:int}")]
