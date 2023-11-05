@@ -17,11 +17,9 @@ namespace DataLayer
 
         public User GetUser(int id)
         {
-            Console.WriteLine("ID ID ID {0}", id);
             var user = db.Users
                 .Where(x => x.Id == id)
                 .FirstOrDefault();
-            Console.WriteLine("CURR USER {0}", user);
             return user;
         }
 
@@ -29,13 +27,8 @@ namespace DataLayer
         {
             var user = db.Users
                 .Where(x => x.Email == email)
-                .Select(p => new User
-                {
-                    UserName = p.UserName,
-                    LastName = p.LastName,
-                    Email = p.Email
-                })
                 .FirstOrDefault();
+
             return user;
         }
 
