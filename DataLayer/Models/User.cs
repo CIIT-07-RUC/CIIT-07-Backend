@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DataLayer.Models;
 
@@ -17,5 +18,6 @@ public partial class User
 
     public string? Phone { get; set; }
 
+    [Key]
     public int Id { get; set; }
 }
