@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using static WebAPI.Controllers.Helpers;
 using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers
@@ -30,7 +31,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetUsers()
+        public IActionResult GetUsers([FromQuery] int page)
         {
             var users = _dataservice.GetUsers();
             if (users == null)
@@ -38,8 +39,11 @@ namespace WebAPI.Controllers
                 return NotFound();
             }
 
+            var helperFunction = new Helpers();
+            var pagination = helperFunction.Pagination(users, page);
+
             // var usersMapped = _mapper.Map<IEnumerable<UserModel>>(users);
-            return Ok(users);
+            return Ok(pagination);
         }
 
 
