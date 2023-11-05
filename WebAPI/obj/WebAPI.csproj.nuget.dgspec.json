@@ -1,26 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "/Users/matuskalanin/Projects/DataLayer/WebAPI/WebAPI.csproj": {}
+    "/Users/botond/Repos/RUC/CIIT-07-Backend/WebAPI/WebAPI.csproj": {}
   },
   "projects": {
-    "/Users/matuskalanin/Projects/DataLayer/WebAPI/WebAPI.csproj": {
+    "/Users/botond/Repos/RUC/CIIT-07-Backend/DataLayer/DataLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/matuskalanin/Projects/DataLayer/WebAPI/WebAPI.csproj",
-        "projectName": "WebAPI",
-        "projectPath": "/Users/matuskalanin/Projects/DataLayer/WebAPI/WebAPI.csproj",
-        "packagesPath": "/Users/matuskalanin/.nuget/packages/",
-        "outputPath": "/Users/matuskalanin/Projects/DataLayer/WebAPI/obj/",
+        "projectUniqueName": "/Users/botond/Repos/RUC/CIIT-07-Backend/DataLayer/DataLayer.csproj",
+        "projectName": "DataLayer",
+        "projectPath": "/Users/botond/Repos/RUC/CIIT-07-Backend/DataLayer/DataLayer.csproj",
+        "packagesPath": "/Users/botond/.nuget/packages/",
+        "outputPath": "/Users/botond/Repos/RUC/CIIT-07-Backend/DataLayer/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/matuskalanin/.nuget/NuGet/NuGet.Config"
+          "/Users/botond/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "/usr/local/share/dotnet/sdk/7.0.308/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -42,6 +41,122 @@
             "EntityFramework": {
               "target": "Package",
               "version": "[6.4.4, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.13, )"
+            },
+            "Microsoft.EntityFrameworkCore.Abstractions": {
+              "target": "Package",
+              "version": "[7.0.13, )"
+            },
+            "Microsoft.EntityFrameworkCore.Analyzers": {
+              "target": "Package",
+              "version": "[7.0.13, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.13, )"
+            },
+            "Microsoft.EntityFrameworkCore.Relational": {
+              "target": "Package",
+              "version": "[7.0.13, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.13, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.13, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[7.0.11, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL.Design": {
+              "target": "Package",
+              "version": "[1.1.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/Users/botond/.dotnet/sdk/7.0.306/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/botond/Repos/RUC/CIIT-07-Backend/WebAPI/WebAPI.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/botond/Repos/RUC/CIIT-07-Backend/WebAPI/WebAPI.csproj",
+        "projectName": "WebAPI",
+        "projectPath": "/Users/botond/Repos/RUC/CIIT-07-Backend/WebAPI/WebAPI.csproj",
+        "packagesPath": "/Users/botond/.nuget/packages/",
+        "outputPath": "/Users/botond/Repos/RUC/CIIT-07-Backend/WebAPI/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/botond/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "/Users/botond/.dotnet/sdk/7.0.306/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "/Users/botond/Repos/RUC/CIIT-07-Backend/DataLayer/DataLayer.csproj": {
+                "projectPath": "/Users/botond/Repos/RUC/CIIT-07-Backend/DataLayer/DataLayer.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
+            "EntityFramework": {
+              "target": "Package",
+              "version": "[6.4.4, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[7.0.13, )"
             },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
@@ -103,7 +218,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.308/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/Users/botond/.dotnet/sdk/7.0.306/RuntimeIdentifierGraph.json"
         }
       }
     }

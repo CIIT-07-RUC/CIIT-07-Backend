@@ -7697,19 +7697,19 @@
     ]
   },
   "packageFolders": {
-    "/Users/matuskalanin/.nuget/packages/": {}
+    "/Users/botond/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/matuskalanin/Projects/DataLayer/DataLayer/DataLayer.csproj",
+      "projectUniqueName": "/Users/botond/Repos/RUC/CIIT-07-Backend/DataLayer/DataLayer.csproj",
       "projectName": "DataLayer",
-      "projectPath": "/Users/matuskalanin/Projects/DataLayer/DataLayer/DataLayer.csproj",
-      "packagesPath": "/Users/matuskalanin/.nuget/packages/",
-      "outputPath": "/Users/matuskalanin/Projects/DataLayer/DataLayer/obj/",
+      "projectPath": "/Users/botond/Repos/RUC/CIIT-07-Backend/DataLayer/DataLayer.csproj",
+      "packagesPath": "/Users/botond/.nuget/packages/",
+      "outputPath": "/Users/botond/Repos/RUC/CIIT-07-Backend/DataLayer/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/matuskalanin/.nuget/NuGet/NuGet.Config"
+        "/Users/botond/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
@@ -7794,7 +7794,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.308/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/Users/botond/.dotnet/sdk/7.0.306/RuntimeIdentifierGraph.json"
       }
     }
   }
