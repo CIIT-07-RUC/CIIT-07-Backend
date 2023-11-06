@@ -71,6 +71,10 @@ public partial class Cit07Context : DbContext
                 .IsFixedLength()
                 .HasColumnName("phone");
             entity.Property(e => e.UserName).HasColumnName("user_name");
+            entity.Property(e => e.IsAdmin).HasColumnName("isadmin");
+            entity.Property(e => e.IsAccountDeactivated).HasColumnName("isaccountdeactivated");
+
+
         });
 
         modelBuilder.Entity<NameBasic>(entity =>

@@ -70,11 +70,12 @@ namespace WebAPI.Controllers
 
             if (userLogin == false)
             {
-                BadRequest();
+                return BadRequest("User does not exist");
             }
 
             var claims = new List<Claim>
-        {
+            {
+                new Claim(ClaimTypes.Email, model.Email), 
                 new Claim(ClaimTypes.Name, model.Email)
             };
 
@@ -111,9 +112,18 @@ namespace WebAPI.Controllers
 
         }
 
+        [Authorize]
         [HttpDelete("{id:int}")]
         public IActionResult DeleteUser(int id)
         {
+            var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+            var currUser = _dataservice.GetUserByEmail(userEmail);
+
+            if (!currUser.IsAdmin)
+            {
+                return Unauthorized();
+            }
+
             var isUserRemoved = _dataservice.RemoveUser(id);
 
             if (!isUserRemoved)
