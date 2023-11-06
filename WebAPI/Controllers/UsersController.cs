@@ -1,17 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using DataLayer;
 using DataLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using static WebAPI.Controllers.Helpers;
-using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers
 {
@@ -31,36 +29,25 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetUsers([FromQuery] int page)
+        public IActionResult GetUsers()
         {
-            var users = _dataservice.GetUsers();
+            var users = _dataservice.GetUsers()
+                .Select(x => CreateUserListModel(x));
             if (users == null)
             {
                 return NotFound();
             }
 
-            var helperFunction = new Helpers();
-            var pagination = helperFunction.Pagination(users, page);
-
             // var usersMapped = _mapper.Map<IEnumerable<UserModel>>(users);
-            return Ok(pagination);
+            return Ok(users);
         }
 
 
         [HttpPost]
         public IActionResult SignIn(RegisterUserModel model)
         {
-            var registerUser = _dataservice.RegisterUser(model.Email, model.Password, model.PasswordConfirmation);
-
-            bool isRegistrationSuccessful = registerUser.Item1;
-            string responseMessage = registerUser.Item2;
-
-            if (isRegistrationSuccessful == false)
-            {
-                return BadRequest(new { isRegistrationSuccessful = isRegistrationSuccessful, responseMessage = responseMessage });
-            }
-
-            return Ok(new { isRegistrationSuccessful = isRegistrationSuccessful, responseMessage = responseMessage });
+            _dataservice.RegisterUser(model.Email, model.Password, model.PasswordConfirmation);
+            return Ok();
         }
 
         [HttpPost("login")]
@@ -70,16 +57,14 @@ namespace WebAPI.Controllers
 
             if (userLogin == false)
             {
-                return BadRequest("User does not exist");
+                BadRequest();
             }
 
             var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Email, model.Email), 
+        {
                 new Claim(ClaimTypes.Name, model.Email)
             };
 
-            // TODO: Hide secret 
             var secret = "popeopwqodpodpaosap323";
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
 
@@ -91,50 +76,11 @@ namespace WebAPI.Controllers
                signingCredentials: creds
             );
 
-            var findUserByEmail = _dataservice.GetUserByEmail(model.Email);
-
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
-            return Ok(new {
-                model.Email,
-                id = findUserByEmail.Id,
-                token = jwt
-            });
+
+            return Ok(new { model.Email, token = jwt });
         }
-
-        [HttpPut("{id:int}")]
-        public IActionResult UpdateUserInfo(int id, [FromBody] UpdateUserModel updatedCategory)
-        {
-            var userLogin = _dataservice.UpdateUserInfo(id, updatedCategory.Phone, updatedCategory.Email);
-            Console.WriteLine("userLoginuserLogin {0}", userLogin);
-
-            return Ok(updatedCategory);
-
-        }
-
-        [Authorize]
-        [HttpDelete("{id:int}")]
-        public IActionResult DeleteUser(int id)
-        {
-            var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
-            var currUser = _dataservice.GetUserByEmail(userEmail);
-
-            if (!currUser.IsAdmin)
-            {
-                return Unauthorized();
-            }
-
-            var isUserRemoved = _dataservice.RemoveUser(id);
-
-            if (!isUserRemoved)
-            {
-                return BadRequest(isUserRemoved);
-            }
-
-            return Ok(isUserRemoved);
-
-        }
-
 
         [HttpGet("{id}")]
         public IActionResult GetUser(int id)
@@ -158,13 +104,6 @@ namespace WebAPI.Controllers
         private UserListModel CreateUserListModel(User user)
         {
             var model = _mapper.Map<UserListModel>(user);
-            return model;
-
-        }
-
-        private UpdateUserModel CreateUpdateUserModel(User user)
-        {
-            var model = _mapper.Map<UpdateUserModel>(user);
             return model;
 
         }

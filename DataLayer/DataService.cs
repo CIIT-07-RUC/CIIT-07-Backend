@@ -141,6 +141,93 @@ namespace DataLayer
                 return false;
             }
         }
+
+        public List<UserBookmark> GetBookmarks(int userId)
+        {
+            return db.UserBookmarks
+                .Where(bookmark => bookmark.UserId == userId)
+                .ToList();
+        }
+        
+        public UserBookmark? GetBookmark(int id)
+        {
+            return db.UserBookmarks.Find(id);
+        }
+        
+        public UserBookmark AddBookmark(UserBookmark userBookmark)
+        {
+            userBookmark.Timestamp = DateTime.Now;
+            var bookmark = db.UserBookmarks.Add(userBookmark).Entity;
+            db.SaveChanges();
+            return bookmark;
+        }
+
+        public void UpdateBookmark(int id, UserBookmark userBookmark)
+        {
+            var bookmark = db.UserBookmarks.Find(id);
+
+            if (bookmark == null)
+            {
+                return;
+            }
+
+            db.UserBookmarks.Entry(bookmark).CurrentValues.SetValues(userBookmark);
+        }
+
+        public void DeleteBookmark(int id)
+        {
+            var bookmark = db.UserBookmarks.Find(id);
+
+            if (bookmark == null)
+            {
+                return;
+            }
+            
+            db.UserBookmarks.Remove(bookmark);
+            db.SaveChanges();
+        }
+
+        public void DeleteAllBookmarks(int userId)
+        {
+            db.UserBookmarks.RemoveRange(db.UserBookmarks
+                .Where(bookmark => bookmark.UserId == userId));
+            db.SaveChanges();
+        }
+
+        public List<UserRating> GetUserRatings(int userId)
+        {
+            return db.UserRatings
+                .Where(rating => rating.UserId == userId)
+                .ToList();
+        }
+
+        public UserRating? GetUserRating(int userId, string tconst)
+        {
+            return db.UserRatings
+                .FirstOrDefault(rating => rating.UserId == 1 && rating.TConst == tconst);
+        }
+
+        public void AddRating(int userId, string tconst, int? rating, string? comment)
+        {
+            db.Database.ExecuteSqlRaw("SELECT public.rate_movie({0}::int4, {1}::bpchar, {2}::int4, {3}::bpchar) AS result", userId, tconst, rating, comment);
+        }
+        public void DeleteMovieRating(int userId, string tconst)
+        {
+            var rating = db.UserRatings.FirstOrDefault(rating => rating.UserId == userId && rating.TConst == tconst);
+
+            if (rating == null)
+            {
+                return;
+            }
+            
+            db.UserRatings.Remove(rating);
+            db.SaveChanges();
+        }
+
+        public void DeleteAllMovieRatings()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

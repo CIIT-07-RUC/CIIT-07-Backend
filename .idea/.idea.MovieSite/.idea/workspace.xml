@@ -11,33 +11,11 @@
       <change afterPath="$PROJECT_DIR$/.idea/.idea.MovieSite/.idea/vcs.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/WebAPI/Controllers/BookmarksController.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/WebAPI/Controllers/RatingsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.MovieSite/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MovieSite/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataLayer/DataService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataLayer/DataService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataLayer/IDataService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataLayer/IDataService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataLayer/bin/Debug/net7.0/DataLayer.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DataLayer/bin/Debug/net7.0/DataLayer.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataLayer/bin/Debug/net7.0/DataLayer.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/DataLayer/bin/Debug/net7.0/DataLayer.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataLayer/obj/DataLayer.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/DataLayer/obj/DataLayer.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataLayer/obj/DataLayer.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/DataLayer/obj/DataLayer.csproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataLayer/obj/Debug/net7.0/DataLayer.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/DataLayer/obj/Debug/net7.0/DataLayer.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataLayer/obj/Debug/net7.0/DataLayer.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DataLayer/obj/Debug/net7.0/DataLayer.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataLayer/obj/Debug/net7.0/DataLayer.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DataLayer/obj/Debug/net7.0/DataLayer.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataLayer/obj/Debug/net7.0/DataLayer.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DataLayer/obj/Debug/net7.0/DataLayer.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataLayer/obj/Debug/net7.0/DataLayer.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/DataLayer/obj/Debug/net7.0/DataLayer.csproj.FileListAbsolute.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataLayer/obj/Debug/net7.0/DataLayer.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DataLayer/obj/Debug/net7.0/DataLayer.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataLayer/obj/Debug/net7.0/DataLayer.genruntimeconfig.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DataLayer/obj/Debug/net7.0/DataLayer.genruntimeconfig.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataLayer/obj/Debug/net7.0/DataLayer.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/DataLayer/obj/Debug/net7.0/DataLayer.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataLayer/obj/Debug/net7.0/ref/DataLayer.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DataLayer/obj/Debug/net7.0/ref/DataLayer.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataLayer/obj/Debug/net7.0/refint/DataLayer.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DataLayer/obj/Debug/net7.0/refint/DataLayer.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataLayer/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/DataLayer/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataLayer/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DataLayer/obj/project.nuget.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebAPI/Controllers/UsersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebAPI/Controllers/UsersController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebAPI/WebAPI.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/WebAPI/WebAPI.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebAPI/obj/Debug/net7.0/WebAPI.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/WebAPI/obj/Debug/net7.0/WebAPI.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebAPI/obj/Debug/net7.0/WebAPI.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/WebAPI/obj/Debug/net7.0/WebAPI.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebAPI/obj/Debug/net7.0/WebAPI.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/WebAPI/obj/Debug/net7.0/WebAPI.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebAPI/obj/WebAPI.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebAPI/obj/WebAPI.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebAPI/obj/WebAPI.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/WebAPI/obj/WebAPI.csproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebAPI/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebAPI/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebAPI/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/WebAPI/obj/project.nuget.cache" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,23 +25,26 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="Toolset" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2XoqskVKBkmpBTEbgytS7pS0okX" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "Merging main",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Merging main&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="WebAPI: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/WebAPI/WebAPI.csproj" />
@@ -90,6 +71,7 @@
       <option name="presentableId" value="Default" />
       <updated>1699305988859</updated>
       <workItem from="1699305989940" duration="10000" />
+      <workItem from="1699306598888" duration="41000" />
     </task>
     <servers />
   </component>
