@@ -95,6 +95,13 @@ namespace WebAPI.Controllers
 
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
+            if (findUserByEmail.IsAccountDeactivated)
+            {
+               _dataservice.ReactivateAccount(findUserByEmail.Id, false);
+            }
+
+
+
             return Ok(new {
                 model.Email,
                 id = findUserByEmail.Id,
@@ -110,6 +117,29 @@ namespace WebAPI.Controllers
 
             return Ok(updatedCategory);
 
+        }
+
+        [Authorize]
+        [HttpPost("deactivate-account")]
+        public IActionResult DeactivateAccount(int id, [FromBody] DeactivateUserAccountModel deactivateUserAccountModel )
+        {
+            var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+            var currUser = _dataservice.GetUserByEmail(userEmail);
+
+            if (currUser.IsAccountDeactivated)
+            {
+                return BadRequest("Account is already deactivated.");
+            }
+
+            var deactivateAccount = _dataservice.ReactivateAccount(currUser.Id, deactivateUserAccountModel.IsAccountDeactivated);
+            if (deactivateAccount)
+            {
+                return Ok("Success! Account is now deactivated.");
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [Authorize]
@@ -162,11 +192,20 @@ namespace WebAPI.Controllers
 
         }
 
+        private DeactivateUserAccountModel CreateDeactivateUserAccountModel(User user)
+        {
+            var model = _mapper.Map<DeactivateUserAccountModel>(user);
+            return model;
+
+        }
+
         private UpdateUserModel CreateUpdateUserModel(User user)
         {
             var model = _mapper.Map<UpdateUserModel>(user);
             return model;
 
         }
+
+       
     }
 }

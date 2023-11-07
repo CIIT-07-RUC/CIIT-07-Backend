@@ -35,14 +35,27 @@ namespace DataLayer
         public List<User> GetUsers()
         {
             var users = db.Users
-                .Select(p => new User
-                {
-                    UserName = p.UserName,
-                    LastName = p.LastName,
-                    Email = p.Email
-                })
+                .Where( x => x.IsAccountDeactivated != true)
                 .ToList();
             return users;
+        }
+
+        public bool ReactivateAccount(int id, bool reactivateAccount)
+        {
+            var user = GetUser(id);
+
+            try
+            {
+                user.IsAccountDeactivated = reactivateAccount;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("EXCEPTION {0}", ex);
+                return false;
+            }
+
         }
 
         public bool LoginUser(string email, string password)
