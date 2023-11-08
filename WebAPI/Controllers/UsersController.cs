@@ -20,15 +20,13 @@ namespace WebAPI.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IDataService _dataservice;
-        private readonly LinkGenerator _linkGenerator;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
 
 
-        public UsersController(IDataService dataService, LinkGenerator linkGenerator, IMapper mapper, IConfiguration configuration)
+        public UsersController(IDataService dataService, IMapper mapper, IConfiguration configuration)
         {
             _dataservice = dataService;
-            _linkGenerator = linkGenerator;
             _mapper = mapper;
             _configuration = configuration;
         }
@@ -70,7 +68,6 @@ namespace WebAPI.Controllers
         public IActionResult Login(LoginUserModel model)
         {
             var userLogin = _dataservice.LoginUser(model.Email, model.Password);
-            Console.WriteLine("USERLOFIN {0}", userLogin);
             if (userLogin == false)
             {
                 return BadRequest("User does not exist");
@@ -116,7 +113,6 @@ namespace WebAPI.Controllers
         public IActionResult UpdateUserInfo(int id, [FromBody] UpdateUserModel updatedCategory)
         {
             var userLogin = _dataservice.UpdateUserInfo(id, updatedCategory.Phone, updatedCategory.Email);
-            Console.WriteLine("userLoginuserLogin {0}", userLogin);
 
             return Ok(updatedCategory);
 

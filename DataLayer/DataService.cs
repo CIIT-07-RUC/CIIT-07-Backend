@@ -122,9 +122,7 @@ namespace DataLayer
 
         public bool UpdateUserInfo(int id, string phone, string email)
         {
-            Console.WriteLine("TEST ME UP {0} {1} {2}", id, phone, email);
             var currUser = GetUser(id);
-            Console.WriteLine("CURR USER {0}", currUser.Id);
 
             if (currUser == null)
             {
@@ -143,7 +141,6 @@ namespace DataLayer
 
             try
             {
-                Console.WriteLine("TU SOM phone -- {0} email {1}", currUser.Email, currUser.Phone);
                 db.Entry(currUser).State = EntityState.Modified; // Mark the entity as modified
                 db.SaveChanges();
                 return true;
