@@ -22,12 +22,15 @@ namespace WebAPI.Controllers
         private readonly IDataService _dataservice;
         private readonly LinkGenerator _linkGenerator;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
 
-        public UsersController(IDataService dataService, LinkGenerator linkGenerator, IMapper mapper)
+
+        public UsersController(IDataService dataService, LinkGenerator linkGenerator, IMapper mapper, IConfiguration configuration)
         {
             _dataservice = dataService;
             _linkGenerator = linkGenerator;
             _mapper = mapper;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -76,11 +79,11 @@ namespace WebAPI.Controllers
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Email, model.Email), 
-                new Claim(ClaimTypes.Name, model.Email)
             };
 
             // TODO: Hide secret 
-            var secret = "popeopwqodpodpaosap323";
+            var secret = _configuration.GetSection("Authentication:Secret").Value;
+
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
