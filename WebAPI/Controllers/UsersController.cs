@@ -67,7 +67,7 @@ namespace WebAPI.Controllers
         public IActionResult Login(LoginUserModel model)
         {
             var userLogin = _dataservice.LoginUser(model.Email, model.Password);
-
+            Console.WriteLine("USERLOFIN {0}", userLogin);
             if (userLogin == false)
             {
                 return BadRequest("User does not exist");
