@@ -109,6 +109,7 @@ namespace WebAPI.Controllers
             });
         }
 
+        [Authorize]
         [HttpPut("{id:int}")]
         public IActionResult UpdateUserInfo(int id, [FromBody] UpdateUserModel updatedCategory)
         {
