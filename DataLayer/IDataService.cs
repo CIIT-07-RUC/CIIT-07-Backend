@@ -12,7 +12,8 @@ namespace DataLayer
         public bool LoginUser(string email, string password);
 		public Tuple<bool, string> RegisterUser(string email, string password, string passwordConfirmation);
 		public bool UpdateUserInfo(int id, string Phone, string Email);
-		public bool RemoveUser(int id);
+		public bool AddUserInfo(int id, string UserName, string FirstName, string LastName, string Phone);
+        public bool RemoveUser(int id);
 		public List<UserBookmark> GetBookmarks(int userId);
 		public UserBookmark? GetBookmark(int id);
 		public UserBookmark AddBookmark(UserBookmark bookmark);

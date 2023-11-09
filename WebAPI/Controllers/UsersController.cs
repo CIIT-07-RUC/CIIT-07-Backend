@@ -12,6 +12,7 @@ using System.Security.Claims;
 using System.Text;
 using static WebAPI.Controllers.Helpers;
 using Microsoft.AspNetCore.Authorization;
+using WebAPI.Models;
 
 namespace WebAPI.Controllers
 {
@@ -117,7 +118,20 @@ namespace WebAPI.Controllers
             var userLogin = _dataservice.UpdateUserInfo(id, updatedCategory.Phone, updatedCategory.Email);
 
             return Ok(updatedCategory);
+        }
 
+        [Authorize]
+        [HttpPost("add-information")]
+        public IActionResult PostUserInfo([FromBody] AddInformationUserModel updatedCategory)
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var addUserInformation = _dataservice.AddUserInfo(Int32.Parse(userId), updatedCategory.UserName, updatedCategory.FirstName, updatedCategory.LastName, updatedCategory.Phone);
+
+            if (addUserInformation)
+            {
+                return Ok("Data were added");
+            }
+            return BadRequest();
         }
 
         [Authorize]
@@ -206,7 +220,13 @@ namespace WebAPI.Controllers
             return model;
 
         }
+        private AddInformationUserModel CreateAddInformationUserModel(User user)
+        {
+            var model = _mapper.Map<AddInformationUserModel>(user);
+            return model;
+        }
 
-       
+
+
     }
 }

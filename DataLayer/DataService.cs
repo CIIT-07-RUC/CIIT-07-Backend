@@ -152,6 +152,49 @@ namespace DataLayer
             }
         }
 
+
+        public bool AddUserInfo(int id, string UserName, string FirstName, string LastName, string Phone)
+        {
+            var currUser = GetUser(id);
+            if (currUser == null)
+            {
+                return false;
+            }
+
+            if (!string.IsNullOrEmpty(UserName))
+            {
+                currUser.UserName = UserName;
+            }
+
+            if (!string.IsNullOrEmpty(FirstName))
+            {
+                currUser.FirstName = FirstName;
+            }
+            if (!string.IsNullOrEmpty(LastName))
+            {
+                currUser.LastName = LastName;
+            }
+            if (!string.IsNullOrEmpty(Phone))
+            {
+                currUser.Phone = Phone;
+            }
+
+            try
+            {
+                db.Entry(currUser).State = EntityState.Modified; 
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("EXCEPTION EX {0}", ex);
+                return false;
+            }
+
+
+        }
+
+
         public List<UserBookmark> GetBookmarks(int userId)
         {
             return db.UserBookmarks

@@ -12,7 +12,7 @@ namespace WebAPI.Models.Profiles
             CreateMap<User, UserListModel>();
             CreateMap<User, UpdateUserModel>();
             CreateMap<User, DeactivateUserAccountModel>();
-
+            CreateMap<User, AddInformationUserModel>();
         }
     }
 } 
