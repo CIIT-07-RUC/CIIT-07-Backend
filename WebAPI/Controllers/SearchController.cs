@@ -27,6 +27,11 @@ namespace WebAPI.Controllers
             
             return Ok(_dataService.SearchByTitle(searchInput));
         }
+        [HttpGet]
+        public IActionResult SearchTitlebyKeyword(string searchInput) 
+        {
+            return Ok(_dataService.SearchTitleByKeyword(searchInput));
+        }
 
 
     }
