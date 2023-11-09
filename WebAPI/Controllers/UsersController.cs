@@ -115,8 +115,12 @@ namespace WebAPI.Controllers
         [HttpPut("{id:int}")]
         public IActionResult UpdateUserInfo(int id, [FromBody] UpdateUserModel updatedCategory)
         {
-            var userLogin = _dataservice.UpdateUserInfo(id, updatedCategory.Phone, updatedCategory.Email);
-
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (Int32.Parse(userId) != id)
+            {
+                return BadRequest();    
+            }
+            _dataservice.UpdateUserInfo(id, updatedCategory.Phone, updatedCategory.Email);
             return Ok(updatedCategory);
         }
 
