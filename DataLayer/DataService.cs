@@ -281,6 +281,23 @@ namespace DataLayer
         {
             throw new NotImplementedException();
         }
+
+	public TitleExtended? SearchByTitle(string searchInput)
+        {
+            return db.TitleExtendeds
+                  .FirstOrDefault(title => title.PrimaryTitle == searchInput);
+                   
+        }
+	public NameBasic? SearchByPersonName(string searchInput)
+        {
+            return db.NameBasics
+                .FirstOrDefault(name => name.Primaryname == searchInput);
+        }
+
+        public List<TitleExtended?> SearchTitlebyKeyword(string searchInput) 
+        {
+            db.Database.ExecuteSqlRaw("SELECT public.exact_match({0}::text) AS result", searchInput);
+        } 
     }
 }
 
