@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using DataLayer;
 using DataLayer.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -18,8 +19,8 @@ namespace WebAPI.Controllers
         [HttpGet]
         public IActionResult GetRatings([FromQuery] int page)
         {
-            // TODO: use actual ID of the authenticated user
-            var ratings = _dataService.GetUserRatings(1);
+            var userId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var ratings = _dataService.GetUserRatings(userId);
             
             var helperFunction = new Helpers();
             var pagination = helperFunction.Pagination(ratings, page);
@@ -30,23 +31,23 @@ namespace WebAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult GetRating(string id)
         {
-            // TODO: use actual ID of the authenticated user
-            return Ok(_dataService.GetUserRating(1, id));
+            var userId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            return Ok(_dataService.GetUserRating(userId, id));
         }
         
         [HttpPost]
         public IActionResult AddRating(UserRating userRating)
         {
-            // TODO: use actual ID of the authenticated user
-            _dataService.AddRating(1, userRating.TConst, userRating.Rating, userRating.Comment);
+            var userId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            _dataService.AddRating(userId, userRating.TConst, userRating.Rating, userRating.Comment);
             return Ok();
         }
         
         [HttpDelete("{id}")]
         public IActionResult DeleteRating(string id)
         {
-            // TODO: use actual ID of the authenticated user
-            _dataService.DeleteMovieRating(1, id);
+            var userId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            _dataService.DeleteMovieRating(userId, id);
             return Ok();
         }
     }

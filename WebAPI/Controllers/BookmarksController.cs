@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using DataLayer;
 using DataLayer.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -18,8 +19,8 @@ namespace WebAPI.Controllers
         [HttpGet]
         public IActionResult GetBookmarks([FromQuery] int page)
         {
-            // TODO: use actual ID of the authenticated user
-            var bookmarks = _dataService.GetBookmarks(1);
+            var userId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var bookmarks = _dataService.GetBookmarks(userId);
             
             var helperFunction = new Helpers();
             var pagination = helperFunction.Pagination(bookmarks, page);
