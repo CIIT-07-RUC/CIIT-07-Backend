@@ -25,6 +25,9 @@ namespace DataLayer
 		public void AddRating(int userId, string tconst, int? rating, string? comment);
 		public void DeleteMovieRating(int userId, string tconst);
 		public void DeleteAllMovieRatings();
+		public TitleExtended? SearchByTitle(string searchInput);
+        	public NameBasic? SearchByPersonName(string searchInput);
+		public List<TitleExtended?> SearchTitlebyKeyword(string searchInput);
 		
 	}
 }
