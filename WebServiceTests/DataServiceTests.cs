@@ -103,6 +103,204 @@ namespace Tests
             var login = service.LoginUser("test1@test.com", "test1234");
             Assert.Equal(false, login);
         }
+        
+        /* Bookmark tests */
+
+        [Fact]
+        public void AddBookmark_ValidData()
+        {
+            var service = new DataService();
+            service.RegisterUser("bookmark@fromunittests.com", "test123", "test123");
+            var findNewCreatedUser = service.GetUserByEmail("bookmark@fromunittests.com");
+
+            var bookmark = new UserBookmark
+            {
+                UserId = findNewCreatedUser.Id,
+                TConst = "tt13210498",
+                BookmarkComment = "Test comment"
+            };
+            var addedBookmark = service.AddBookmark(bookmark);
+            
+            Assert.Equal(findNewCreatedUser.Id, addedBookmark.UserId);
+            Assert.Equal("tt13210498", addedBookmark.TConst);
+            Assert.Equal("Test comment", addedBookmark.BookmarkComment);
+            
+            service.DeleteBookmark(addedBookmark.BookmarkId);
+            service.RemoveUser(findNewCreatedUser.Id);
+        }
+
+        [Fact]
+        public void GetBookmarks_ValidData()
+        {
+            var service = new DataService();
+            service.RegisterUser("bookmark@fromunittests.com", "test123", "test123");
+            var findNewCreatedUser = service.GetUserByEmail("bookmark@fromunittests.com");
+
+            var bookmark = new UserBookmark
+            {
+                UserId = findNewCreatedUser.Id,
+                TConst = "tt13210498",
+                BookmarkComment = "Test comment"
+            };
+            service.AddBookmark(bookmark);
+
+            var userBookmarks = service.GetBookmarks(findNewCreatedUser.Id);
+            var addedBookmark = userBookmarks[0];
+            
+            Assert.Single(userBookmarks);
+            Assert.Equal(findNewCreatedUser.Id, addedBookmark.UserId);
+            Assert.Equal("tt13210498", addedBookmark.TConst);
+            Assert.Equal("Test comment", addedBookmark.BookmarkComment);
+            
+            service.DeleteBookmark(addedBookmark.BookmarkId);
+            service.RemoveUser(findNewCreatedUser.Id);
+        }
+
+        [Fact]
+        public void GetBookmarks_InvalidUserId()
+        {
+            var service = new DataService();
+            var userBookmarks = service.GetBookmarks(999);
+            Assert.Empty(userBookmarks);
+        }
+
+        [Fact]
+        public void GetSingleBookmark_ValidId()
+        {
+            var service = new DataService();
+            
+            var bookmark = new UserBookmark
+            {
+                UserId = 1,
+                TConst = "tt13210498",
+                BookmarkComment = "Test comment"
+            };
+            var addedBookmark = service.AddBookmark(bookmark);
+
+            var userBookmark = service.GetBookmark(addedBookmark.BookmarkId);
+            
+            Assert.NotNull(userBookmark);
+            Assert.Equal(1, userBookmark.UserId);
+            Assert.Equal("tt13210498", userBookmark.TConst);
+            Assert.Equal("Test comment", userBookmark.BookmarkComment);
+            
+            service.DeleteBookmark(addedBookmark.BookmarkId);
+        }
+
+        [Fact]
+        public void GetSingleBookmark_InvalidId()
+        {
+            var service = new DataService();
+            var userBookmark = service.GetBookmark(999);
+            Assert.Null(userBookmark);
+        }
+
+        [Fact]
+        public void UpdateBookmark()
+        {
+            var service = new DataService();
+            
+            var bookmark = new UserBookmark
+            {
+                UserId = 1,
+                TConst = "tt13210498",
+                BookmarkComment = "Test comment"
+            };
+            var addedBookmark = service.AddBookmark(bookmark);
+            
+            var bookmarkUpdate = new UserBookmark
+            {
+                UserId = 1,
+                TConst = "tt13210498",
+                BookmarkComment = "Updated text"
+            };
+            
+            service.UpdateBookmark(addedBookmark.BookmarkId, bookmarkUpdate);
+
+            var userBookmark = service.GetBookmark(addedBookmark.BookmarkId);
+            
+            Assert.NotNull(userBookmark);
+            Assert.Equal(1, userBookmark.UserId);
+            Assert.Equal("tt13210498", userBookmark.TConst);
+            Assert.Equal("Updated text", userBookmark.BookmarkComment);
+            
+            service.DeleteBookmark(addedBookmark.BookmarkId);
+        }
+
+        [Fact]
+        public void DeleteBookmark_ValidId()
+        {
+            var service = new DataService();
+            
+            var bookmark = new UserBookmark
+            {
+                UserId = 1,
+                TConst = "tt13210498",
+                BookmarkComment = "Test comment"
+            };
+            var addedBookmark = service.AddBookmark(bookmark);
+
+            service.DeleteBookmark(addedBookmark.BookmarkId);
+            
+            var userBookmark = service.GetBookmark(addedBookmark.BookmarkId);
+            Assert.Null(userBookmark);
+        }
+
+        [Fact]
+        public void DeleteBookmarksOfUser()
+        {
+            var service = new DataService();
+            service.RegisterUser("bookmark@fromunittests.com", "test123", "test123");
+            var findNewCreatedUser = service.GetUserByEmail("bookmark@fromunittests.com");
+            
+            var bookmark = new UserBookmark
+            {
+                UserId = findNewCreatedUser.Id,
+                TConst = "tt13210498",
+                BookmarkComment = "Test comment"
+            };
+            var addedBookmark = service.AddBookmark(bookmark);
+
+            service.DeleteAllBookmarks(findNewCreatedUser.Id);
+            
+            var userBookmarks = service.GetBookmarks(findNewCreatedUser.Id);
+            Assert.Empty(userBookmarks);
+            
+            service.RemoveUser(findNewCreatedUser.Id);
+        }
+        
+        /* Ratings tests */
+
+        [Fact]
+        public void AddAndGetRatings_ValidData()
+        {
+            var service = new DataService();
+            service.RegisterUser("rating@fromunittests.com", "test123", "test123");
+            var findNewCreatedUser = service.GetUserByEmail("rating@fromunittests.com");
+
+            service.AddRating(findNewCreatedUser.Id, "tt13210498", 2, "Test comment");
+
+            var userRatings = service.GetUserRatings(findNewCreatedUser.Id);
+            var addedRating = userRatings[0];
+            
+            Assert.Single(userRatings);
+            Assert.Equal(findNewCreatedUser.Id, addedRating.UserId);
+            Assert.Equal("tt13210498", addedRating.TConst);
+            Assert.Equal(2, addedRating.Rating);
+            Assert.Equal("Test comment", addedRating.Comment);
+
+            service.DeleteMovieRating(findNewCreatedUser.Id, "tt13210498");
+
+            service.RemoveUser(findNewCreatedUser.Id);
+        }
+
+        [Fact]
+        public void GetRatings_InvalidUserId()
+        {
+            var service = new DataService();
+            var userRatings = service.GetUserRatings(999);
+            Assert.Empty(userRatings);
+        }
     }
 }
 
