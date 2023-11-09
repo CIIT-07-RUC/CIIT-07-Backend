@@ -72,10 +72,12 @@ namespace WebAPI.Controllers
             {
                 return BadRequest("User does not exist");
             }
+            var findUserByEmail = _dataservice.GetUserByEmail(model.Email);
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Email, model.Email), 
+                new Claim(ClaimTypes.Email, model.Email),
+                new Claim(ClaimTypes.NameIdentifier, findUserByEmail.Id.ToString()),
             };
 
             // TODO: Hide secret 
@@ -91,7 +93,6 @@ namespace WebAPI.Controllers
                signingCredentials: creds
             );
 
-            var findUserByEmail = _dataservice.GetUserByEmail(model.Email);
 
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
