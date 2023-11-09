@@ -16,10 +16,15 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetRatings()
+        public IActionResult GetRatings([FromQuery] int page)
         {
             // TODO: use actual ID of the authenticated user
-            return Ok(_dataService.GetUserRatings(1));
+            var ratings = _dataService.GetUserRatings(1);
+            
+            var helperFunction = new Helpers();
+            var pagination = helperFunction.Pagination(ratings, page);
+            
+            return Ok(pagination);
         }
 
         [HttpGet("{id}")]

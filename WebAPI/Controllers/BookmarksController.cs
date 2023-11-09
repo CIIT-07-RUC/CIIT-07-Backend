@@ -16,10 +16,15 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetBookmarks()
+        public IActionResult GetBookmarks([FromQuery] int page)
         {
             // TODO: use actual ID of the authenticated user
-            return Ok(_dataService.GetBookmarks(1));
+            var bookmarks = _dataService.GetBookmarks(1);
+            
+            var helperFunction = new Helpers();
+            var pagination = helperFunction.Pagination(bookmarks, page);
+            
+            return Ok(pagination);
         }
 
         [HttpGet("{id}")]
