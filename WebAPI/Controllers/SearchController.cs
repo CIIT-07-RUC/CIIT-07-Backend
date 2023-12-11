@@ -15,13 +15,13 @@ namespace WebAPI.Controllers
             _dataService = dataService;
         }
 
-        [HttpGet("{searchInput}")]
+        [HttpGet("title/{searchInput}")]
         public IActionResult SearchByTitle(string searchInput)
         {
             return Ok(_dataService.SearchByPersonName(searchInput));
         }
 
-        [HttpGet("{searchInput}")]
+        [HttpGet("person/{searchInput}")]
         public IActionResult SearchByPersonName(string searchInput)
         {
             

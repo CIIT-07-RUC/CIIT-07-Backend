@@ -27,7 +27,7 @@ namespace DataLayer
 		public void DeleteAllMovieRatings();
 		public TitleExtended? SearchByTitle(string searchInput);
         	public NameBasic? SearchByPersonName(string searchInput);
-		public List<TitleExtended?> SearchTitlebyKeyword(string searchInput);
+		public List<TitleExtended?> SearchTitleByKeyword(string searchInput);
 		
 	}
 }

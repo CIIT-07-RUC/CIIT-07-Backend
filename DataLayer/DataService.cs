@@ -294,9 +294,10 @@ namespace DataLayer
                 .FirstOrDefault(name => name.Primaryname == searchInput);
         }
 
-        public List<TitleExtended?> SearchTitlebyKeyword(string searchInput) 
+        public List<TitleExtended?> SearchTitleByKeyword(string searchInput)
         {
             db.Database.ExecuteSqlRaw("SELECT public.exact_match({0}::text) AS result", searchInput);
+            return new List<TitleExtended?>();
         } 
     }
 }
