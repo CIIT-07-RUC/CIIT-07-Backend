@@ -15,6 +15,13 @@ namespace DataLayer
         {
         }
 
+        public TitlePrincipal GetCastById(string id)
+        {
+            var cast =db.TitlePrincipals
+            .Where(x => x.Tconst == id)
+            .FirstOrDefault();
+            return cast;
+        }
         public User GetUser(int id)
         {
             var user = db.Users
