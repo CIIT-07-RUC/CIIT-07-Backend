@@ -15,12 +15,22 @@ namespace DataLayer
         {
         }
 
-        public TitlePrincipal GetCastById(string id)
+        public NameBasic GetCastById(string id)
         {
-            var cast =db.TitlePrincipals
-            .Where(x => x.Tconst == id)
+            Cit07Context db = new();
+            var cast =db.NameBasics
+            .Where(x => x.Nconst == id)
             .FirstOrDefault();
             return cast;
+        }
+
+        public TitleExtended GetMovieById(string id)
+        {
+            Cit07Context db = new();
+            var movie = db.TitleExtendeds
+            .Where(x => x.TConst == id)
+            .FirstOrDefault();
+            return movie;
         }
         public User GetUser(int id)
         {
