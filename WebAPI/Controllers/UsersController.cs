@@ -125,12 +125,11 @@ namespace WebAPI.Controllers
         }
 
         [Authorize]
-        [HttpPost("add-information/{id:int}")]
-        public IActionResult PostUserInfo([FromRoute] int id, [FromBody] AddInformationUserModel updatedCategory)
+        [HttpPost("add-information")]
+        public IActionResult PostUserInfo([FromBody] AddInformationUserModel updatedCategory)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var addUserInformation = _dataservice.AddUserInfo(id, updatedCategory.UserName, updatedCategory.FirstName, updatedCategory.LastName, updatedCategory.Phone);
-
+            var addUserInformation = _dataservice.AddUserInfo(Int32.Parse(userId), updatedCategory.UserName, updatedCategory.FirstName, updatedCategory.LastName, updatedCategory.Phone);
             if (addUserInformation)
             {
                 return Ok("Data were added");
