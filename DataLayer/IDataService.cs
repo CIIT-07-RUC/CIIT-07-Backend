@@ -8,6 +8,7 @@ namespace DataLayer
 
         public List<Tuple<string, string, string, string>> GetAllCastByMovieTitle(string movieTitle);
         public List<Tuple<string, string, string, int>> SearchCoPlayers(string castKeywords);
+        public List<TitleExtended> GetSimilarTitles(string id);
         public NameBasic GetCastById(string id);
 		public TitleExtended GetMovieById(string id);
         public User GetUser(int id);

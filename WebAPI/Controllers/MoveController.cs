@@ -27,5 +27,12 @@ namespace WebAPI.Controllers
             }
             return Ok(movie);
         }
+
+        [HttpGet("{id}/similar")]
+        public IActionResult GetSimilar(string id)
+        {
+            var movie = _dataService.GetSimilarTitles(id);
+            return Ok(movie);
+        }
     }
 }

@@ -135,7 +135,34 @@ namespace DataLayer
             return resultList;
         }
 
+        public List<TitleExtended> GetSimilarTitles(string id)
+        {
+            var connectionString = "Host=cit.ruc.dk;Database=cit07;Username=cit07;Password=GdSpVBqksHbh";
+            using var connection = new NpgsqlConnection(connectionString);
+            connection.Open();
 
+            using var cmd = connection.CreateCommand();
+            cmd.Connection = connection;
+            cmd.CommandText = $"SELECT * FROM public.similar_titles('{id}')";
+
+            using var rdr = cmd.ExecuteReader();
+
+            var resultList = new List<TitleExtended>();
+
+            while (rdr.Read())
+            {
+                var title = new TitleExtended
+                {
+                    TConst = rdr.GetString(0),
+                    PrimaryTitle = rdr.GetString(2),
+                    Poster = rdr.IsDBNull(10) ? null : rdr.GetString(10),
+                };
+                resultList.Add(title);
+            }
+
+            connection.Close();
+            return resultList;
+        }
 
         public bool LoginUser(string email, string password)
         {
