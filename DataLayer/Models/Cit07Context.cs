@@ -434,9 +434,9 @@ public partial class Cit07Context : DbContext
 
         modelBuilder.Entity<UserRating>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("user_rating");
+            entity.HasKey(e => new { e.UserId, e.TConst }).HasName("user_rating_pkey");
+
+            entity.ToTable("user_rating");
 
             entity.HasIndex(e => e.TConst, "user_rating_t_const_idx");
 

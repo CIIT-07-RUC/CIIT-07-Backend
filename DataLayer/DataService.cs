@@ -363,7 +363,7 @@ namespace DataLayer
         public UserRating? GetUserRating(int userId, string tconst)
         {
             return db.UserRatings
-                .FirstOrDefault(rating => rating.UserId == 1 && rating.TConst == tconst);
+                .FirstOrDefault(rating => rating.UserId == userId && rating.TConst == tconst);
         }
 
         public void AddRating(int userId, string tconst, int? rating, string? comment)
