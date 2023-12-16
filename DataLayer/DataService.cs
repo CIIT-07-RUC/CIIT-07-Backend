@@ -75,6 +75,35 @@ namespace DataLayer
 
         }
 
+        public List<Tuple<string, string, string, int>> SearchCoPlayers(string  castKeywords)
+        {
+            var connectionString = "Host=cit.ruc.dk;Database=cit07;Username=cit07;Password=GdSpVBqksHbh";
+            using var connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+
+            using var cmd = connection.CreateCommand();
+            cmd.Connection = connection;
+            cmd.CommandText = $"SELECT * FROM public.search_coplayers('{castKeywords}')";
+
+            using var rdr = cmd.ExecuteReader();
+
+            var resultList = new List<Tuple<string, string, string, int>>();
+
+            while (rdr.Read())
+            {
+                var nconst = rdr.GetString(0);  
+                var primaryName = rdr.GetString(1);
+                var primaryProfession = rdr.GetString(2);
+                var frequency = rdr.GetInt32(3);
+
+                var resultTuple = new Tuple<string, string, string, int>(nconst, primaryName, primaryProfession, frequency);
+                resultList.Add(resultTuple);
+            }
+
+            connection.Close();
+            return resultList;
+        }
+
         public bool LoginUser(string email, string password)
         {
 

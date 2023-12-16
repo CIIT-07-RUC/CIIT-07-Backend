@@ -5,7 +5,8 @@ namespace DataLayer
 {
 	public interface IDataService
 	{
-		public NameBasic GetCastById(string id);
+		public List<Tuple<string, string, string, int>> SearchCoPlayers(string castKeywords);
+        public NameBasic GetCastById(string id);
 		public TitleExtended GetMovieById(string id);
         public User GetUser(int id);
 		public User GetUserByEmail(string email);

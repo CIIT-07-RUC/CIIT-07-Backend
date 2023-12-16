@@ -16,6 +16,7 @@ namespace WebAPI.Controllers
             _dataService = dataService;
         }
 
+
         [HttpGet("{id}")]
         public IActionResult GetCast(string id)
         {
@@ -26,6 +27,18 @@ namespace WebAPI.Controllers
                 return NotFound();
             }
             return Ok(cast);
+        } 
+
+        [HttpGet("coplayers/{castKeywords}")]
+        public IActionResult SearchCoPlayers(string castKeywords)
+        {
+            var cast = _dataService.SearchCoPlayers(castKeywords);
+            if (cast == null)
+            {
+                return NotFound();
+            }
+            return Ok(cast);
         }
+
     }
 }
