@@ -40,5 +40,16 @@ namespace WebAPI.Controllers
             return Ok(cast);
         }
 
+        [HttpGet("fullcast/{movieTitle}")]
+        public IActionResult GetAllCastByMovieTitle(string movieTitle)
+        {
+            var cast = _dataService.GetAllCastByMovieTitle(movieTitle);
+            if (cast == null)
+            {
+                return NotFound();
+            }
+            return Ok(cast);
+        }
+
     }
 }
