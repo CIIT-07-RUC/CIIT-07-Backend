@@ -390,14 +390,19 @@ namespace DataLayer
 
 	public TitleExtended? SearchByTitle(string searchInput)
         {
-            return db.TitleExtendeds
-                  .FirstOrDefault(title => title.PrimaryTitle == searchInput);
-                   
+            Cit07Context db = new();
+            var movies = db.TitleExtendeds
+            .Where(x => x.PrimaryTitle == searchInput)
+            .FirstOrDefault();
+            return movies;
         }
 	public NameBasic? SearchByPersonName(string searchInput)
         {
-            return db.NameBasics
-                .FirstOrDefault(name => name.Primaryname == searchInput);
+            Cit07Context db = new();
+            var person = db.NameBasics
+            .Where(x => x.Primaryname == searchInput)
+            .FirstOrDefault();
+            return person;
         }
 
         public List<TitleExtended?> SearchTitleByKeyword(string searchInput)
