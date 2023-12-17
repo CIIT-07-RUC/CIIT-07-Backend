@@ -27,12 +27,23 @@ namespace WebAPI.Controllers
             
             return Ok(pagination);
         }
+        
+        [HttpGet("{tconst}")]
+        public IActionResult GetRatings(string tconst, [FromQuery] int page)
+        {
+            var ratings = _dataService.GetMovieRatings(tconst);
+            
+            var helperFunction = new Helpers();
+            var pagination = helperFunction.Pagination(ratings, page);
+            
+            return Ok(pagination);
+        }
 
-        [HttpGet("{id}")]
-        public IActionResult GetRating(string id)
+        [HttpGet("{tconst}/mycomment")]
+        public IActionResult GetRating(string tconst)
         {
             var userId = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            return Ok(_dataService.GetUserRating(userId, id));
+            return Ok(_dataService.GetUserRating(userId, tconst));
         }
         
         [HttpPost]

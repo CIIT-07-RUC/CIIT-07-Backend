@@ -365,6 +365,13 @@ namespace DataLayer
             return db.UserRatings
                 .FirstOrDefault(rating => rating.UserId == userId && rating.TConst == tconst);
         }
+        
+        public List<UserRating> GetMovieRatings(string tconst)
+        {
+            return db.UserRatings
+                .Where(rating => rating.TConst == tconst)
+                .ToList();
+        }
 
         public void AddRating(int userId, string tconst, int? rating, string? comment)
         {

@@ -28,6 +28,7 @@ namespace DataLayer
 		public void DeleteAllBookmarks(int userId);
 		public List<UserRating> GetUserRatings(int userId);
 		public UserRating? GetUserRating(int userId, string tconst);
+		public List<UserRating> GetMovieRatings(string tconst);
 		public void AddRating(int userId, string tconst, int? rating, string? comment);
 		public void DeleteMovieRating(int userId, string tconst);
 		public void DeleteAllMovieRatings();
